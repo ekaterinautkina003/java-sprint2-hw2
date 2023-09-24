@@ -1,17 +1,73 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
 public class Main {
+
     public static void main(String[] args) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        printMenu();
+    }
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+    private static void printMenu() {
+        System.out.println("Выберите одно из действий: ");
+        System.out.println("1 - Считать все месячные отчёты.");
+        System.out.println("2 - Считать годовой отчёт.");
+        System.out.println("3 - Сверить отчёты.");
+        System.out.println("4 - Вывести информацию обо всех месячных отчётах.");
+        System.out.println("5 - Вывести информацию о годовом отчёте.");
+        System.out.println("6 - Выход.");
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("i = " + i);
+        Scanner scanner = new Scanner(System.in);
+        List<String> fileNames = new ReaderName().getName();
+        MonthlyReport monthlyReport = new MonthlyReport();
+        YearlyReport yearlyReport = new YearlyReport();
+
+
+        while (true) {
+            int command = scanner.nextInt();
+            if (command == 1) {
+                for (String filterFileName : filterFileNames(fileNames, "m")) {
+                    monthlyReport.loadReport(filterFileName);
+                }
+                monthlyReport.printReadMonths();
+
+            }
+            else if (command == 2) {
+                for (String filterFileName : filterFileNames(fileNames, "y")) {
+                    yearlyReport.loadReport(filterFileName);
+                }
+                yearlyReport.printReadYears();
+
+
+            }
+            else if (command == 3) {
+                ReportEngine reportEngine = new ReportEngine(monthlyReport, yearlyReport);
+
+
+            }
+            else if (command == 4) {
+                monthlyReport.report();
+
+
+            }
+            else if (command == 5) {
+                yearlyReport.report();
+
+
+            }
+            else if (command == 6) {
+                System.out.println("Программа завершена.");
+                break;
+
+            }
+            else  {
+                System.out.println("Извините, такой команды пока нет.");
+                break;
+            }
         }
+    }
+
+    private static List<String> filterFileNames(List<String> fileNames, String elem) {
+        return fileNames.stream().filter(e -> e.contains(elem)).collect(Collectors.toList());
     }
 }

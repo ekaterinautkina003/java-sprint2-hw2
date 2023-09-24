@@ -1,2 +1,23 @@
-package PACKAGE_NAME;public class Months {
+public enum Months {
+    JANUARY("Январь"),
+    FEBRUARY("Февраль"),
+    MARCH("Март"),
+    APRIL("Апрель"),
+    MAY("Май"),
+    JUNE("Июнь"),
+    JULY("Июль"),
+    AUGUST("Август"),
+    SEPTEMBER("Сентябрь"),
+    OCTOBER("Октябрь"),
+    NOVEMBER("Ноябрь"),
+    DECEMBER("Декабрь");
+    private String monthName;
+
+    Months(String elem) {
+        monthName = elem;
+    }
+
+    public String getName() {
+        return monthName;
+    }
 }
